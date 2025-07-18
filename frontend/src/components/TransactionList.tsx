@@ -71,7 +71,7 @@ export const TransactionList = ({ transactions, onDelete }: TransactionListProps
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Receipt className="h-5 w-5" />
-          Transactions ({transactions.length})
+          Transações ({transactions.length})
         </CardTitle>
       </CardHeader>
       <CardContent>
