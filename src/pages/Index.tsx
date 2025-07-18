@@ -1,14 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from "react";
+import { AuthForm } from "@/components/AuthForm";
+import { Dashboard } from "@/components/Dashboard";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const [user, setUser] = useState<string | null>(null);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("currentUser");
+    if (savedUser) {
+      setUser(savedUser);
+    }
+  }, []);
+
+  const handleLogin = (username: string) => {
+    setUser(username);
+    localStorage.setItem("currentUser", username);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("currentUser");
+  };
+
+  if (!user) {
+    return <AuthForm onLogin={handleLogin} />;
+  }
+
+  return <Dashboard username={user} onLogout={handleLogout} />;
 };
 
 export default Index;
