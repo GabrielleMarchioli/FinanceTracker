@@ -22,18 +22,18 @@ export const MonthlyChart = ({ transactions, currentDate }: MonthlyChartProps) =
                transactionDate.getMonth() === date.getMonth();
       });
 
-      const income = monthTransactions
+      const rendas = monthTransactions
         .filter(t => t.type === "income")
         .reduce((sum, t) => sum + t.amount, 0);
       
-      const expenses = monthTransactions
+      const despesas = monthTransactions
         .filter(t => t.type === "expense")
         .reduce((sum, t) => sum + t.amount, 0);
 
       data.push({
-        month: date.toLocaleDateString('en-US', { month: 'short' }),
-        income,
-        expenses,
+        month: date.toLocaleDateString('pt-BR', { month: 'short' }),
+        rendas,
+        despesas,
       });
     }
     return data;
@@ -83,7 +83,7 @@ export const MonthlyChart = ({ transactions, currentDate }: MonthlyChartProps) =
           <p className="font-medium">{label}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-sm" style={{ color: entry.color }}>
-              {entry.dataKey}: ${entry.value.toLocaleString()}
+              {entry.name}: R${entry.value.toLocaleString()}
             </p>
           ))}
         </div>
@@ -99,7 +99,7 @@ export const MonthlyChart = ({ transactions, currentDate }: MonthlyChartProps) =
         <div className="bg-card border rounded-lg shadow-md p-3">
           <p className="font-medium">{data.payload.name}</p>
           <p className="text-sm" style={{ color: data.payload.color }}>
-            ${data.value.toLocaleString()}
+            R${data.value.toLocaleString()}
           </p>
         </div>
       );
@@ -114,7 +114,7 @@ export const MonthlyChart = ({ transactions, currentDate }: MonthlyChartProps) =
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="h-5 w-5" />
-            Income vs Expenses (6 Months)
+            Rendas vs Despesas (6 meses)
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -130,16 +130,16 @@ export const MonthlyChart = ({ transactions, currentDate }: MonthlyChartProps) =
                 <YAxis className="text-muted-foreground" fontSize={12} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar 
-                  dataKey="income" 
+                  dataKey="rendas" 
                   fill="hsl(var(--success))" 
                   radius={[2, 2, 0, 0]}
-                  name="Income"
+                  name="Rendas"
                 />
                 <Bar 
-                  dataKey="expenses" 
+                  dataKey="despesas" 
                   fill="hsl(var(--danger))" 
                   radius={[2, 2, 0, 0]}
-                  name="Expenses"
+                  name="Despesas"
                 />
               </BarChart>
             </ResponsiveContainer>
@@ -153,7 +153,7 @@ export const MonthlyChart = ({ transactions, currentDate }: MonthlyChartProps) =
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <PieChartIcon className="h-5 w-5" />
-              Expense Categories This Month
+              Categorias de Despesas Este Mês
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -185,8 +185,8 @@ export const MonthlyChart = ({ transactions, currentDate }: MonthlyChartProps) =
                     style={{ backgroundColor: category.color }}
                   />
                   <span className="truncate">{category.name}</span>
-                  <span className="text-muted-foreground ml-auto">
-                    ${category.value.toLocaleString()}
+                  <span className="text-muted-foreground text-right w-24">
+                    R${category.value.toLocaleString()}
                   </span>
                 </div>
               ))}

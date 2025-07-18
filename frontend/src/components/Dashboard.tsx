@@ -131,7 +131,7 @@ export const Dashboard = ({ username, onLogout }: { username: string; onLogout: 
   }, [monthlyBudget, username]);
 
   const formatMonth = (date: Date) => {
-    return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    return date.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
   };
 
   const isCurrentMonth = () => {
@@ -152,7 +152,7 @@ export const Dashboard = ({ username, onLogout }: { username: string; onLogout: 
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-foreground">FinanceTracker</h1>
-                <p className="text-sm text-muted-foreground">Welcome, {username}</p>
+                <p className="text-sm text-muted-foreground">Bem-vindo(a), {username}</p>
               </div>
             </div>
             <Button variant="outline" onClick={onLogout}>
@@ -184,52 +184,41 @@ export const Dashboard = ({ username, onLogout }: { username: string; onLogout: 
           
           <Button variant="gradient" onClick={() => setShowTransactionForm(true)}>
             <Plus className="h-4 w-4" />
-            Add Transaction
+            Adicionar Transação
           </Button>
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <Card className="shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Income</CardTitle>
+              <CardTitle className="text-sm font-medium">Renda Total</CardTitle>
               <TrendingUp className="h-4 w-4 text-success" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-success">${totalIncome.toLocaleString()}</div>
+              <div className="text-2xl font-bold text-success">R${totalIncome.toLocaleString()}</div>
             </CardContent>
           </Card>
 
           <Card className="shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
+              <CardTitle className="text-sm font-medium">Despesas Totais</CardTitle>
               <TrendingDown className="h-4 w-4 text-danger" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-danger">${totalExpenses.toLocaleString()}</div>
+              <div className="text-2xl font-bold text-danger">R${totalExpenses.toLocaleString()}</div>
             </CardContent>
           </Card>
 
           <Card className="shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Balance</CardTitle>
+              <CardTitle className="text-sm font-medium">Sobra</CardTitle>
               <Wallet className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold ${remaining >= 0 ? 'text-success' : 'text-danger'}`}>
-                ${Math.abs(remaining).toLocaleString()}
+                R${Math.abs(remaining).toLocaleString()}
               </div>
-            </CardContent>
-          </Card>
-
-          <Card className="shadow-md">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Budget Used</CardTitle>
-              <PieChart className="h-4 w-4 text-warning" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold mb-2">{budgetUsed.toFixed(1)}%</div>
-              <Progress value={Math.min(budgetUsed, 100)} className="h-2" />
             </CardContent>
           </Card>
         </div>

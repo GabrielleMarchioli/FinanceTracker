@@ -16,8 +16,8 @@ interface TransactionFormProps {
 }
 
 const categories = {
-  income: ["Salary", "Freelance", "Investment", "Bonus", "Other Income"],
-  expense: ["Food", "Transportation", "Housing", "Entertainment", "Healthcare", "Shopping", "Utilities", "Other"]
+  income: ["Salario", "Freelancer", "Investimento", "Bonus", "Other Income"],
+  expense: ["Comida", "Transporte", "Aluguel/moradia", "Entretenimento", "Saúde", "Compras", "Utilidades", "Outros"]
 };
 
 export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionFormProps) => {
@@ -60,7 +60,7 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <DollarSign className="h-5 w-5 text-primary" />
-            Add Transaction
+            Adicionar Transação
           </DialogTitle>
         </DialogHeader>
 
@@ -73,7 +73,7 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
               onClick={() => setType("income")}
               className="w-full"
             >
-              Income
+              Renda
             </Button>
             <Button
               type="button"
@@ -81,13 +81,13 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
               onClick={() => setType("expense")}
               className="w-full"
             >
-              Expense
+              Despesa
             </Button>
           </div>
 
           {/* Amount */}
           <div className="space-y-2">
-            <Label htmlFor="amount">Amount</Label>
+            <Label htmlFor="amount">Valor</Label>
             <Input
               id="amount"
               type="number"
@@ -101,11 +101,11 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
 
           {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">Descrição</Label>
             <Input
               id="description"
               type="text"
-              placeholder="What was this for?"
+              placeholder="Para que serviu isso?"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
@@ -114,10 +114,10 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
 
           {/* Category */}
           <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
+            <Label htmlFor="category">Categoria</Label>
             <Select value={category} onValueChange={setCategory}>
               <SelectTrigger>
-                <SelectValue placeholder="Select a category" />
+                <SelectValue placeholder="Selecione uma categoria" />
               </SelectTrigger>
               <SelectContent>
                 {categories[type].map((cat) => (
@@ -131,7 +131,7 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
 
           {/* Date */}
           <div className="space-y-2">
-            <Label htmlFor="date">Date</Label>
+            <Label htmlFor="date">Data</Label>
             <Input
               id="date"
               type="date"
@@ -147,7 +147,7 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <CreditCard className="h-4 w-4 text-primary" />
-                  <Label htmlFor="installment">Installment Payment</Label>
+                  <Label htmlFor="installment">Compra Parcelada</Label>
                 </div>
                 <Switch
                   id="installment"
@@ -158,21 +158,21 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
               
               {isInstallment && (
                 <div className="space-y-2">
-                  <Label htmlFor="installmentCount">Number of Installments</Label>
+                  <Label htmlFor="installmentCount">Número de parcelas</Label>
                   <Select value={installmentCount} onValueChange={setInstallmentCount}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {[2, 3, 4, 6, 12, 18, 24, 36].map((count) => (
+                      {[2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((count) => (
                         <SelectItem key={count} value={count.toString()}>
-                          {count} months
+                          {count} Parcelas
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                   <p className="text-xs text-muted-foreground">
-                    Each installment: ${amount ? (parseFloat(amount) / parseInt(installmentCount)).toFixed(2) : '0.00'}
+                    Valor de cada parcela: ${amount ? (parseFloat(amount) / parseInt(installmentCount)).toFixed(2) : '0.00'}
                   </p>
                 </div>
               )}
@@ -182,10 +182,10 @@ export const TransactionForm = ({ onAdd, onClose, defaultDate }: TransactionForm
           {/* Buttons */}
           <div className="flex gap-2 pt-4">
             <Button type="button" variant="outline" onClick={onClose} className="flex-1">
-              Cancel
+              Cancelar
             </Button>
             <Button type="submit" variant="gradient" className="flex-1">
-              Add Transaction
+              Add Transação
             </Button>
           </div>
         </form>

@@ -11,14 +11,14 @@ interface TransactionListProps {
 
 export const TransactionList = ({ transactions, onDelete }: TransactionListProps) => {
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'BRL',
     }).format(amount);
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    return new Date(dateString).toLocaleDateString('pt-BR', {
       month: 'short',
       day: 'numeric',
     });
@@ -48,14 +48,14 @@ export const TransactionList = ({ transactions, onDelete }: TransactionListProps
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Receipt className="h-5 w-5" />
-            Transactions
+            Transações
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center py-8 text-muted-foreground">
             <Receipt className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>No transactions this month</p>
-            <p className="text-sm">Add your first transaction to get started</p>
+            <p>Sem transações este mês</p>
+            <p className="text-sm">Adicione sua primeira transação para começar.</p>
           </div>
         </CardContent>
       </Card>
