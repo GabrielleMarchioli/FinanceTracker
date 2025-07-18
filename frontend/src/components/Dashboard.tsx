@@ -157,7 +157,7 @@ export const Dashboard = ({ username, onLogout }: { username: string; onLogout: 
             </div>
             <Button variant="outline" onClick={onLogout}>
               <LogOut className="h-4 w-4" />
-              Logout
+              Sair
             </Button>
           </div>
         </div>
