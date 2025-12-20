@@ -34,10 +34,8 @@ export const AuthForm = ({ onLogin }: { onLogin: (username: string) => void }) =
       const data = await res.json();
       const username = data.user.username || loginData.email.split("@")[0];
       toast({ title: "Login realizado!", description: `Bem-vindo, ${username}!` });
-      onLogin(username); // Passa apenas o username
-      console.log("Login bem-sucedido:", username);
+      onLogin(username);
     } catch (error: any) {
-      console.error("Erro no login:", error);
       toast({
         title: "Erro no login",
         description: error.message || "Email ou senha inválidos",
@@ -64,12 +62,20 @@ export const AuthForm = ({ onLogin }: { onLogin: (username: string) => void }) =
       });
       if (!res.ok) {
         const err = await res.json();
+        // Tratamento específico para 409 (email duplicado)
+        if (res.status === 409) {
+          toast({
+            title: "Email já cadastrado",
+            description: err.detail || "Use outro email ou faça login.",
+            variant: "destructive",
+          });
+          return;  // Sai sem crash
+        }
         throw new Error(err.detail || "Erro ao registrar");
       }
       const data = await res.json();
       toast({ title: "Registro realizado!", description: `Conta criada para ${data.user.username}!` });
-      onLogin(data.user.username); // Passa apenas o username
-      console.log("Registro bem-sucedido:", data.user.username);
+      onLogin(data.user.username);
     } catch (error: any) {
       console.error("Erro no registro:", error);
       toast({
@@ -91,9 +97,7 @@ export const AuthForm = ({ onLogin }: { onLogin: (username: string) => void }) =
         },
       });
       if (error) throw error;
-      console.log("Login com Google iniciado");
     } catch (error: any) {
-      console.error("Erro no Google Login:", error);
       toast({
         title: "Erro ao entrar com Google",
         description: error.message || "Falha na conexão. Verifique as configurações.",

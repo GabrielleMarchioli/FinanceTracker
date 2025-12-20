@@ -1,8 +1,8 @@
 # app/routers/auth.py
-from fastapi import APIRouter, HTTPException, Depends  # <-- Adicione Depends aqui!
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer
 from typing import Dict, Any
-from ..config.database import supabase
+from ..config.database import supabase, supabase_admin  # Importe ambos!
 from ..schemas.user import RegisterData, LoginData, UserOut
 
 router = APIRouter(
@@ -33,14 +33,17 @@ async def register(data: RegisterData):
     # Verifica email duplicado usando admin (service_role key)
     try:
         print("[LOG] Checando emails existentes...")
-        users = supabase.auth.admin.list_users()
-        for user in users.users:
+        if supabase_admin is None:
+            print("[LOG] ERRO: SUPABASE_SERVICE_ROLE_KEY não configurada")
+            raise HTTPException(status_code=500, detail="Servidor não configurado para checar emails")
+        users_list = supabase_admin.auth.admin.list_users()  # Retorna lista diretamente
+        for user in users_list:  # Itera na lista
             if user.email == data.email:
                 print("[LOG] Email já cadastrado:", data.email)
-                raise HTTPException(status_code=409, detail="Email já cadastrado. Use outro email ou faça login.")
+                raise HTTPException(status_code=500, detail="Email já cadastrado. Use outro email ou faça login.")
     except Exception as e:
         print("[LOG] Erro ao checar emails:", str(e))
-        raise HTTPException(status_code=500, detail="Erro interno ao verificar email")
+        raise HTTPException(status_code=409, detail="Use outro email ou faça login.")
 
     try:
         print("[LOG] Iniciando sign_up no Supabase...")
