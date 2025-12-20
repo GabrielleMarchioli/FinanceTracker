@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";  // <-- Adicione isso!
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -174,7 +174,7 @@ export const Dashboard = ({ username, onLogout }: { username: string; onLogout: 
               <Calendar className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-semibold">{formatMonth(currentDate)}</h2>
               {isCurrentMonth() && (
-                <Badge variant="secondary">Current</Badge>
+                <Badge variant="secondary">Atual</Badge>
               )}
             </div>
             <Button variant="outline" size="icon" onClick={() => navigateMonth("next")}>
